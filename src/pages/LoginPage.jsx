@@ -16,26 +16,34 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    try {
-      if (!(formData.email || formData.password)) {
-        alert("please fill all the field");
-      }
 
+    // ✅ Fix validation: Check if either field is missing
+    if (!formData.email || !formData.password) {
+      alert("Please fill all the fields");
+      return;
+    }
+
+    try {
       const response = await axios.post(
         "https://node-backend-lv3g.onrender.com/user/login",
-        formData
+        formData,
+        {
+          withCredentials: true, // ✅ send cookies/auth headers if backend uses them
+        }
       );
+
       const data = response.data;
       console.log(data, ".....");
+
       if (response.status === 200) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("Role", data.alreadyEmail.role);
-        alert("success");
+        alert("Login successful ✅");
         setFormData({ email: "", password: "" });
       }
     } catch (error) {
-      console.log(error);
+      console.log("❌ Login Error:", error);
+      alert("Login failed. Please check credentials or try again later.");
     }
   };
 
