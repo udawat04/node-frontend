@@ -22,7 +22,10 @@ try {
     alert("please fill all the field")
   }
 
-  const response = await axios.post("http://localhost:4000/user/login",formData);
+  const response = await axios.post(
+    "https://node-backend-lv3g.onrender.com/user/login",
+    formData
+  );
   const data = response.data
   console.log(data,".....");
   if (response.status === 200) {

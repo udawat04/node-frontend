@@ -25,13 +25,12 @@ const AddProduct = () => {
         }
 
       const response = await axios.post(
-        "http://localhost:4000/product/create",
+        "https://node-backend-lv3g.onrender.com/product/create",
         formData,
         {
           headers: {
-            "Content-Type": "application/json", 
-            Authorization: `Bearer ${Token}`, 
-            
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${Token}`,
           },
         }
       );

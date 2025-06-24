@@ -12,7 +12,7 @@ const ClientPage = () => {
     async function fetchData() {
       try {
         const response = await axios.get(
-          "http://localhost:4000/product/",
+          "https://node-backend-lv3g.onrender.com/product/",
 
           {
             headers: {
@@ -20,7 +20,6 @@ const ClientPage = () => {
               Authorization: `Bearer ${Token}`,
             },
           }
-          
         );
 
         const data = response.data;

@@ -34,7 +34,7 @@ const SignupPage = () => {
       }
 
       const response = await axios.post(
-        "http://localhost:4000/user/create",
+        "https://node-backend-lv3g.onrender.com/user/create",
         formData
       );
       const data = response.data;
