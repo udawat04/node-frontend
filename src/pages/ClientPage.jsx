@@ -1,19 +1,16 @@
-import React from 'react'
-import { useEffect } from 'react'
-import axios from "axios"
-import { useState } from 'react'
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const ClientPage = () => {
-  const [product,setProduct] = useState([])
-  const Token = localStorage.getItem("token")
-  const Role = localStorage.getItem("Role")
- 
+  const [product, setProduct] = useState([]);
+  const Token = localStorage.getItem("token");
+  const Role = localStorage.getItem("Role");
+
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await axios.get(
           "https://node-backend-lv3g.onrender.com/product/",
-
           {
             headers: {
               "Content-Type": "application/json",
@@ -23,44 +20,55 @@ const ClientPage = () => {
         );
 
         const data = response.data;
-        setProduct(data.result)
-        console.log(data,"datat");
+        setProduct(data.result);
+        console.log(data, "datat");
       } catch (error) {
         console.log(error);
       }
     }
     fetchData();
-  }, [])
+  }, []);
 
-  console.log(product,"sssss");
   return (
-    <>
-      <div>{Role}Page</div>
+    <div className="min-h-screen bg-gradient-to-br from-yellow-100 to-pink-100 p-6">
+      <h2 className="text-3xl font-bold text-center text-pink-700 mb-10 capitalize">
+        {Role} Page
+      </h2>
 
-      <div className="p-4">
-        <h3 className="text-xl font-semibold mb-4">Product Details</h3>
-        <table className="min-w-full border border-gray-300 text-left">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="border px-4 py-2">Name</th>
-              <th className="border px-4 py-2">Price</th>
-              <th className="border px-4 py-2">Created By</th>
-            </tr>
-          </thead>
-          <tbody>
-            {product &&
-              product.map((p) => (
-                <tr>
-                  <td className="border px-4 py-2">{p.name}</td>
-                  <td className="border px-4 py-2">{p.price}</td>
-                  <td className="border px-4 py-2">{p.userId.name}</td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+      <div className="bg-white shadow-xl rounded-lg overflow-hidden">
+        <h3 className="text-2xl font-semibold bg-pink-200 text-pink-800 px-6 py-4">
+          Product Details
+        </h3>
+
+        <div className="overflow-x-auto">
+          <table className="min-w-full border-t border-gray-200">
+            <thead className="bg-gray-100 text-gray-700">
+              <tr>
+                <th className="px-6 py-3 border-b">Name</th>
+                <th className="px-6 py-3 border-b">Price</th>
+                <th className="px-6 py-3 border-b">Created By</th>
+              </tr>
+            </thead>
+            <tbody>
+              {product &&
+                product.map((p, index) => (
+                  <tr
+                    key={index}
+                    className="hover:bg-gray-50 transition-all duration-150"
+                  >
+                    <td className="px-6 py-3 border-b">{p.name}</td>
+                    <td className="px-6 py-3 border-b">₹ {p.price}</td>
+                    <td className="px-6 py-3 border-b">
+                      {p.userId?.name || "N/A"}
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </>
+    </div>
   );
-}
+};
 
-export default ClientPage
+export default ClientPage;
